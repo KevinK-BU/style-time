@@ -30,43 +30,21 @@ document.getElementById('upload').addEventListener('change', function () {
     img.src = URL.createObjectURL(file);
 });
 
-let isDragging = false;
-let sampledColors = [];
+canvas.addEventListener('click', function(event) {
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
 
-canvas.addEventListener('mousedown', () => {
-    isDragging = true;
-    sampledColors = [];
-});
-
-canvas.addEventListener('mouseup', () => {
-    isDragging = false;
-    if (sampledColors.length > 0) {
-        const avgColor = getAverageColor(sampledColors);
-        removeBackground(ctx, canvas, avgColor);
-    }
-});
-
-canvas.addEventListener('mousemove', function (event) {
-    if (!isDragging) return;
-    const x = event.offsetX;
-    const y = event.offsetY;
     const data = ctx.getImageData(x, y, 1, 1).data;
-    sampledColors.push({ r: data[0], g: data[1], b: data[2] });
-});
 
-function getAverageColor(colors) {
-    const total = colors.reduce((acc, color) => ({
-        r: acc.r + color.r,
-        g: acc.g + color.g,
-        b: acc.b + color.b
-    }), { r: 0, g: 0, b: 0 });
-    const count = colors.length;
-    return {
-        r: total.r / count,
-        g: total.g / count,
-        b: total.b / count
-    };
-}
+    if (data[3] === 0) { // If the clicked pixel is transparent, do nothing
+        return;
+    }
+
+    const clickedColor = { r: data[0], g: data[1], b: data[2] };
+
+    removeBackground(ctx, canvas, clickedColor);
+});
 
 function removeBackground(ctx, canvas, selectedColor) {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
