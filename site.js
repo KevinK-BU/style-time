@@ -86,7 +86,7 @@ document.getElementById('import-file').addEventListener('change', async (e) => {
         await loadCategoryItems('Bottom', 'bottom-select');
         await loadCategoryItems('Outerwear', 'outerwear-select');
         await loadCategoryItems('Shoes', 'shoes-select');
-        await loadCategoryItems('Accessory', 'accessories-select');
+        await loadCategoryItems('Accessory', 'accessory-select');
     } catch (err) {
         console.error('Import failed:', err);
         alert('Failed to import closet.');
@@ -116,7 +116,7 @@ document.getElementById('save').addEventListener('click', async () => {
         await loadCategoryItems('Bottom', 'bottom-select');
         await loadCategoryItems('Outerwear', 'outerwear-select');
         await loadCategoryItems('Shoes', 'shoes-select');
-        await loadCategoryItems('Accessory', 'accessories-select');
+        await loadCategoryItems('Accessory', 'accessory-select');
         alert("Item saved!");
     } catch (err) {
         console.error("Error saving item:", err);
@@ -153,7 +153,7 @@ async function loadCloset() {
                 await loadCategoryItems('Bottom', 'bottom-select');
                 await loadCategoryItems('Outerwear', 'outerwear-select');
                 await loadCategoryItems('Shoes', 'shoes-select');
-                await loadCategoryItems('Accessory', 'accessories-select');
+                await loadCategoryItems('Accessory', 'accessory-select');
             };
 
             div.appendChild(img);
@@ -194,10 +194,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     await loadCategoryItems('Bottom', 'bottom-select');
     await loadCategoryItems('Outerwear', 'outerwear-select');
     await loadCategoryItems('Shoes', 'shoes-select');
-    await loadCategoryItems('Accessory', 'accessories-select');
+    await loadCategoryItems('Accessory', 'accessory-select');
 });
 
-['top', 'bottom', 'outerwear', 'shoes', 'accessories'].forEach(cat => {
+['top', 'bottom', 'outerwear', 'shoes', 'accessory'].forEach(cat => {
     document.getElementById(`${cat}-select`).addEventListener('change', async (e) => {
         const category = cat.charAt(0).toUpperCase() + cat.slice(1);
         const items = await getClothesByCategory(category);
@@ -222,7 +222,7 @@ document.getElementById('add-accessory').addEventListener('click', async () => {
 
     const newSelect = document.createElement('select');
     const index = container.querySelectorAll('select').length + 1;
-    newSelect.id = 'accessories-select-' + index;
+    newSelect.id = 'accessory-select-' + index;
     container.appendChild(newSelect);
 
     const preview = document.createElement('div');
